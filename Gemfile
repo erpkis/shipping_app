@@ -41,8 +41,7 @@ group :development, :test do
   gem 'pry'
   gem 'rubocop'
   gem 'solargraph'
-end
-
-group :test do
+  gem 'factory_bot_rails'
   gem 'rspec-rails'
+  gem 'faker'
 end
