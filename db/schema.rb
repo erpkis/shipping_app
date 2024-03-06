@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_04_122346) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_06_142612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_04_122346) do
     t.string "vin"
     t.string "fuel_type"
     t.integer "capacity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "city"
+    t.string "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -36,4 +45,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_04_122346) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.date "delivery_date"
+    t.date "delivery_location"
+    t.integer "status"
+    t.string "description"
+    t.string "weight"
+    t.bigint "client_id", null: false
+    t.bigint "car_id", null: false
+    t.bigint "driver_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["car_id"], name: "index_orders_on_car_id"
+    t.index ["client_id"], name: "index_orders_on_client_id"
+    t.index ["driver_id"], name: "index_orders_on_driver_id"
+  end
+
+  add_foreign_key "orders", "cars"
+  add_foreign_key "orders", "clients"
+  add_foreign_key "orders", "drivers"
 end
