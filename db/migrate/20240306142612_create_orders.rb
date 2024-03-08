@@ -2,7 +2,7 @@ class CreateOrders < ActiveRecord::Migration[7.1]
   def change
     create_table :orders do |t|
       t.date :delivery_date
-      t.date :delivery_location
+      t.string :delivery_location
       t.integer :status
       t.string :description
       t.string :weight

@@ -47,7 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_06_142612) do
 
   create_table "orders", force: :cascade do |t|
     t.date "delivery_date"
-    t.date "delivery_location"
+    t.string "delivery_location"
     t.integer "status"
     t.string "description"
     t.string "weight"

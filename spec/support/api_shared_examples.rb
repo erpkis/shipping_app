@@ -1,4 +1,4 @@
-RSpec.shared_examples "API CRUD operations" do |model_factory, endpoint|
+RSpec.shared_examples "API CRUD operations" do |model_factory, endpoint, update_attributes|
     let(:valid_attributes) { FactoryBot.attributes_for(model_factory) }
     let(:model_class) { model_factory.to_s.classify.constantize }
     let(:model_instance) { FactoryBot.create(model_factory) }
@@ -35,13 +35,16 @@ RSpec.shared_examples "API CRUD operations" do |model_factory, endpoint|
     end
   
     describe "PUT /#{endpoint}/:id" do
-      let(:new_attributes) { { name: 'New Name' } }
+      let(:new_attributes) { update_attributes }
   
       before { put "/#{endpoint}/#{model_instance.id}", params: { model_symbol => new_attributes } }
   
       it "updates the instance" do
+        updated_model = model_class.find(model_instance.id)
+        new_attributes.each do |key, value|
+          expect(updated_model.send(key)).to eq(value)
+        end
         expect(response).to have_http_status(200)
-        expect(model_instance.reload.name).to eq('New Name')
       end
     end
   
