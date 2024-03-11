@@ -1,10 +1,21 @@
 .main_nav{
     width:100%;
+    display:flex;
+    flex-flow:row;
+    background-color: rgb(48, 48, 63);
+    align-items:baseline;
+    text-transform:uppercase;
 }
 .main_nav ul{
     list-style: none;
     display:flex;
     flex-flow:row;
-    justify-content:space-between;
-    background-color: blue;
+    justify-content:space-around;
+    width:100%;
+}
+.logo_container{
+    width:9rem;
+    height:3rem;
+    position:relative;
+    border:none;
 }
