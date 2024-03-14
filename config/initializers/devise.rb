@@ -16,12 +16,12 @@ Devise.setup do |config|
   # by default. You can change it below and use your own secret key.
   # config.secret_key = 'c167e213f33bd03203a8d8e3132930da3c67fb4641b5cae717c9c839335ca3154c76b9de30dbd66ff81ba9a23af6998d78c5b52a4ae4550f6a26ca41fd92ee71'
   config.jwt do |jwt|
-    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY'] # Ustaw to w swoich zmiennych środowiskowych!
+    jwt.secret = Rails.application.credentials.devise_jwt_secret_key
     jwt.dispatch_requests = [
-      ['POST', %r{^/login$}]
+      ['POST', %r{^/sign_in$}]
     ]
     jwt.revocation_requests = [
-      ['DELETE', %r{^/logout$}]
+      ['DELETE', %r{^/sign_out$}]
     ]
     jwt.expiration_time = 1.day.to_i
   end
@@ -34,7 +34,7 @@ Devise.setup do |config|
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
-
+  config.navigational_formats = [:json]
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
