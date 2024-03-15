@@ -121,6 +121,8 @@ GEM
       railties (>= 5.0.0)
     faker (3.2.3)
       i18n (>= 1.8.11, < 2)
+    fast_jsonapi (1.5)
+      activesupport (>= 4.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -314,6 +316,7 @@ DEPENDENCIES
   devise-jwt
   factory_bot_rails
   faker
+  fast_jsonapi
   pg (~> 1.1)
   pry
   puma (>= 5.0)
