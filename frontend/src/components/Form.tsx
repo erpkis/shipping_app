@@ -1,23 +1,37 @@
-interface Field {
-    id: number;
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+interface FormField {
     name: string;
     label: string;
-    type: string; // number, text etc.
+    type: string;
+  }
+  
+  interface FormProps {
+    fields: FormField[];
+    onSubmit: SubmitHandler<any>; // to do
+  }
+
+const FormComponent: React.FC<FormProps> = ({ fields, onSubmit }) => {
+
+    const { register, handleSubmit, formState: { errors } } = useForm<any>();
+      return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+      {fields.map((field : FormField) => (
+        <div key={field.name}>
+          <label htmlFor={field.name}>{field.label}</label>
+          <input
+            id={field.name}
+            type={field.type}
+            {...register(field.name, { required: true })}
+          />
+          {errors[field.name] && <span>This field is required</span>}
+        </div>
+      ))}
+
+      <button type="submit">Submit</button>
+    </form>
+      );
 }
 
-const Form = (fields: Field[], onSubmit: () => {}) => {
-    return (
-        <form onSubmit={onSubmit}>
-            {fields.map(field => (
-            <div key={field.id}>
-                <label htmlFor={field.name}>{field.label}</label>
-                <input type={field.type} name={field.name} />
-            </div>
-            ))}
-            <button type="submit">Zatwierdź</button>
-
-        </form>
-    )
-}
-
-export default Form
+export default FormComponent
