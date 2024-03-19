@@ -2,21 +2,13 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import fetchData from "../utils/functions/fetchData";
 export default function Clients() {
     const [clients, setClients] = useState<any>()
-    const fetchData = async () => {
-      try{
-        const response = await axios.get("http://localhost:3000/clients")
-        setClients(response.data)
-        console.log(response.data)
-      }catch{
-        
-      }
-      
-    }
+    
   
     useEffect(() => {
-      fetchData()
+      fetchData("http://localhost:3000/clients", setClients)
     }, [])
 
     
