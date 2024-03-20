@@ -26,6 +26,7 @@ export default function Drivers() {
 
 
     const onSubmit: SubmitHandler<Driver> = async(data: any) => {
+      console.log(data)
       try{
       const response = await fetch('http://localhost:3000/drivers', {
         method: 'POST',

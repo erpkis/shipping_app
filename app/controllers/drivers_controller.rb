@@ -1,5 +1,5 @@
 class DriversController < ApiBaseController
-  
+  before_action :authenticate_user!
   private
 
   def resource_class

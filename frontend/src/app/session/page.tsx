@@ -1,26 +1,31 @@
+"use client"
+
+import FormComponent from "@/components/Form";
 import axios from "axios";
 import { useState } from "react";
-
+import { SubmitHandler } from "react-hook-form";
+type LoginField = {
+  login: string,
+  password: string,
+}
 export default function Session() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-
-  const handleLogin = async (event: any) => {
-    event.preventDefault();
+  const loginFields = [
+    {name: 'user[email]', label: 'Email', type: 'text'},
+    {name: 'user[password]', label: 'Hasło', type: 'password'}
+  ]
+  const handleLogin: SubmitHandler<LoginField> = async (data: LoginField) => {
+    console.log(data)
     try {
-      const response = await axios.post('http://localhost:3000/login', {
-        user: {
-          email: email,
-          password: password
-        }
-      });
+      const response = await axios.post('http://localhost:3000/login', data
+      );
 
       if (response.status === 200) {
         console.log('Logowanie pomyślne', response.data);
        
       } else {
         //error
+        console.log(response)
       }
     } catch (error) {
       console.error('Błąd podczas logowania:', error);
@@ -28,26 +33,6 @@ export default function Session() {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <label htmlFor="email">Email:</label>
-      <input
-        type="email"
-        id="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      
-      <label htmlFor="password">Hasło:</label>
-      <input
-        type="password"
-        id="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      
-      <button type="submit">Zaloguj się</button>
-      
-      {error && <p>{error}</p>}
-    </form>
+    <FormComponent fields={loginFields} onSubmit={handleLogin}/>
   );
 }
