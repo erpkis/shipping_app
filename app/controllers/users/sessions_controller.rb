@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+    include ActionController::Cookies
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -25,10 +26,29 @@ class Users::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
 
-  # def login
-  #   binding.pry
-  #   super 
-  # end
+  def create #logowanie
+    super do |user|
+        if user
+            jwt_token = jwt_token = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
+            cookies.signed[:jwt] = {
+                value: jwt_token,
+                httponly: true,
+                secure: Rails.env.production?,
+                samesite: :none,
+                domain: :all
+              }
+        end
+    end
+  end
+
+  def destroy #wylogowanie
+    puts "TEST"
+    binding.pry
+    super do |user|
+        
+        cookies.signed.delete(:jwt)
+    end
+  end
   respond_to :json
   private
     def respond_with(_resource, _opts={})
@@ -39,6 +59,7 @@ class Users::SessionsController < Devise::SessionsController
     end
 
     def respond_to_on_destroy
+        binding.pry
         log_out_success && return if current_user
 
         log_out_failure
@@ -51,7 +72,7 @@ class Users::SessionsController < Devise::SessionsController
     end
 
     def log_out_failure
-      binding.pry
+      
         render json: {
             message:'Something went wrong'
         }, status: :unauthorized

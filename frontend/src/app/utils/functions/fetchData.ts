@@ -1,6 +1,7 @@
 import axios from "axios"
 import { Dispatch } from "react"
 
+axios.defaults.withCredentials = true;
 const fetchData = async (url: string, dispatcher: Dispatch<any>) => {
     try{
       const response = await axios.get(url)
