@@ -29,6 +29,7 @@ class Users::SessionsController < Devise::SessionsController
   def create #logowanie
     super do |user|
         if user
+            binding.pry
             jwt_token = jwt_token = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
             cookies.signed[:jwt] = {
                 value: jwt_token,
@@ -41,14 +42,14 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
-  def destroy #wylogowanie
-    puts "TEST"
-    binding.pry
-    super do |user|
+#   def destroy #wylogowanie
+#     puts "TEST"
+#     binding.pry
+#     super do |user|
         
-        cookies.signed.delete(:jwt)
-    end
-  end
+#         cookies.delete(:jwt)
+#     end
+#   end
   respond_to :json
   private
     def respond_with(_resource, _opts={})
@@ -59,7 +60,6 @@ class Users::SessionsController < Devise::SessionsController
     end
 
     def respond_to_on_destroy
-        binding.pry
         log_out_success && return if current_user
 
         log_out_failure

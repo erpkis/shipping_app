@@ -9,4 +9,9 @@ class DriversController < ApiBaseController
   def resource_params
     params.require(:driver).permit(:name, :surname, :phone_number, :address, :city, :postal_code)
   end
+
+  def authenticate_user!
+    binding.pry
+    super
+  end
 end

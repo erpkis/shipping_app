@@ -9,8 +9,9 @@ const Navbar = () => {
     const authContext = useAuth()
 
     const logout = async() => {
-        axios.defaults.withCredentials = true;
+        
         try{
+            axios.defaults.withCredentials = true;
             const response = await axios.delete('http://localhost:3000/logout');
             if (response.status === 200) {
                 console.log(response)
