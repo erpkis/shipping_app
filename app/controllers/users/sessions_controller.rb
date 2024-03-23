@@ -29,15 +29,15 @@ class Users::SessionsController < Devise::SessionsController
   def create #logowanie
     super do |user|
         if user
-            binding.pry
-            jwt_token = jwt_token = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
-            cookies.signed[:jwt] = {
-                value: jwt_token,
-                httponly: true,
-                secure: Rails.env.production?,
-                samesite: :none,
-                domain: :all
-              }
+            # binding.pry
+            # jwt_token = jwt_token = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
+            # cookies.signed[:jwt] = {
+            #     value: jwt_token,
+            #     httponly: true,
+            #     secure: Rails.env.production?,
+            #     samesite: :none,
+            #     domain: :all
+           #  }
         end
     end
   end
