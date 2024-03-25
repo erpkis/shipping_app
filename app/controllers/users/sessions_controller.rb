@@ -29,6 +29,7 @@ class Users::SessionsController < Devise::SessionsController
   def create #logowanie
     super do |user|
         if user
+            puts "test"
             # binding.pry
             # jwt_token = jwt_token = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
             # cookies.signed[:jwt] = {

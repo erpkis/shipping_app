@@ -26,6 +26,7 @@ export default function Session() {
 
       if (response.status === 200) {
         console.log(response)
+        localStorage.setItem("auth_key", response.headers["authorization"])
         console.log('Logowanie pomyślne', response.data);
         authContext!.setIsAuthenticated(true)
        

@@ -6,17 +6,22 @@ import Image from 'next/image'
 import { useAuth } from '@/contexts/authContext'
 import axios from 'axios'
 const Navbar = () => {
-    const authContext = useAuth()
+    const { isAuthenticated, setIsAuthenticated, isAuthCheckingCompleted } = useAuth();
 
     const logout = async() => {
         
         try{
             axios.defaults.withCredentials = true;
-            const response = await axios.delete('http://localhost:3000/logout');
+            const response = await axios.delete('http://localhost:3000/logout', {
+                headers: {
+                    Authorization: localStorage.getItem("auth_key")
+                }
+            });
             if (response.status === 200) {
+                localStorage.removeItem("auth_key")
                 console.log(response)
                 console.log('Wylogowano pomyslnie', response.data);
-                authContext!.setIsAuthenticated(false)
+                setIsAuthenticated(false)
                
               } else {
                 //error
@@ -38,11 +43,15 @@ const Navbar = () => {
                 <li><Link href={"/drivers"}>Kierowcy</Link></li>
                 <li><Link href={"/orders"}>Zlecenia</Link></li>
                 <li><Link href={"/clients"}>Klienci</Link></li>
-                {authContext?.isAuthenticated ? 
-                    <li onClick={logout}>Wyloguj</li> 
-                    : 
-                    <li><Link href={'/session'}>Logowanie</Link></li>
-                }
+                {isAuthCheckingCompleted ? (
+                    isAuthenticated ? 
+                        <li onClick={logout}>Wyloguj</li> 
+                        : 
+                        <li><Link href={'/session'}>Logowanie</Link></li>
+                    ) : (
+                    // Możesz tu dodać jakiś wskaźnik ładowania lub nic nie wyświetlać
+                    <div>Ładowanie...</div>
+                )}
             </ul>
         </nav>
     )

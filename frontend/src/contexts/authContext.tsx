@@ -1,13 +1,18 @@
 "use client"
 
-import { createContext, useContext, useState, ReactNode, Dispatch } from 'react';
+import { createContext, useContext, useState, ReactNode, Dispatch, useEffect, SetStateAction } from 'react';
 
 interface AuthContextType {
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<React.SetStateAction<boolean>>;
+  isAuthCheckingCompleted: boolean; //zmienna pomocnicza do ładowania komponentów
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({
+  isAuthenticated: false,
+  setIsAuthenticated: function (value: SetStateAction<boolean>): void{},
+  isAuthCheckingCompleted: false
+});
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -20,9 +25,15 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthCheckingCompleted, setIsAuthCheckingCompleted] = useState<boolean>(false);
 
+  useEffect(() => {
+    const authKey = localStorage.getItem("auth_key");
+    setIsAuthenticated(!!authKey);
+    setIsAuthCheckingCompleted(true);
+  }, [])
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, isAuthCheckingCompleted }}>
       {children}
     </AuthContext.Provider>
   );
