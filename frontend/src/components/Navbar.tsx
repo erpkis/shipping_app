@@ -40,12 +40,14 @@ const Navbar = () => {
                 <Link href={"/"}><Image src={'/images/logo.png'} alt={'test'} fill/></Link>
             </div>
             <ul>
-                <li><Link href={"/drivers"}>Kierowcy</Link></li>
-                <li><Link href={"/orders"}>Zlecenia</Link></li>
-                <li><Link href={"/clients"}>Klienci</Link></li>
-                {isAuthCheckingCompleted ? (
+            {isAuthCheckingCompleted ? (
                     isAuthenticated ? 
-                        <li onClick={logout}>Wyloguj</li> 
+                        <>
+                            <li><Link href={"/drivers"}>Kierowcy</Link></li>
+                            <li><Link href={"/orders"}>Zlecenia</Link></li>
+                            <li><Link href={"/clients"}>Klienci</Link></li>
+                            <li onClick={logout}>Wyloguj</li> 
+                        </>
                         : 
                         <li><Link href={'/session'}>Logowanie</Link></li>
                     ) : (
