@@ -29,27 +29,26 @@ class Users::SessionsController < Devise::SessionsController
   def create #logowanie
     super do |user|
         if user
-            puts "test"
             # binding.pry
-            # jwt_token = jwt_token = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
-            # cookies.signed[:jwt] = {
-            #     value: jwt_token,
-            #     httponly: true,
-            #     secure: Rails.env.production?,
-            #     samesite: :none,
-            #     domain: :all
-           #  }
+            jwt_token = jwt_token = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
+            cookies.signed[:jwt] = {
+                value: jwt_token,
+                httponly: true,
+                secure: Rails.env.production?,
+                samesite: :none,
+                domain: :all,
+                expires: 1.minute.from_now,
+            }
         end
     end
   end
 
 #   def destroy #wylogowanie
-#     puts "TEST"
-#     binding.pry
-#     super do |user|
+#     puts "WYLOGOWUJE"
+#     # super do |user|
         
-#         cookies.delete(:jwt)
-#     end
+#     #     cookies.delete(:jwt)
+#     # end
 #   end
   respond_to :json
   private
@@ -61,9 +60,13 @@ class Users::SessionsController < Devise::SessionsController
     end
 
     def respond_to_on_destroy
-        log_out_success && return if current_user
-
-        log_out_failure
+        if current_user
+            log_out_success 
+            cookies.delete(:jwt)
+            return
+        else   
+            log_out_failure
+        end
     end
 
     def log_out_success
