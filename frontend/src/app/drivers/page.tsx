@@ -10,12 +10,9 @@ import FormComponent from "@/components/Form";
 import { useEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import fetchData from "../utils/functions/fetchData";
-import { useAuth } from "@/contexts/authContext";
-import { useRouter } from "next/navigation";
+
 export default function Drivers() {
     const [drivers, setDrivers] = useState<any>()
-    const { isAuthenticated} = useAuth();
-    const router = useRouter()
     const driverFields = [
       { name: 'name', label: 'Imię', type: 'text' },
       { name: 'surname', label: 'Nazwisko', type: 'text' },
@@ -23,11 +20,9 @@ export default function Drivers() {
       { name: 'address', label: 'Adres', type: 'Adres' },
     ];
     useEffect(() => {
-      if(!isAuthenticated){
-        router.push('/session')
-      }
+      
       fetchData("http://localhost:3000/drivers", setDrivers)
-    }, [isAuthenticated, router])
+    }, [])
 
 
     const onSubmit: SubmitHandler<Driver> = async(data: any) => {

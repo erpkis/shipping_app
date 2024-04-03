@@ -5,9 +5,10 @@ import styles from '../app/ui/navbar.module.css'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/authContext'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 const Navbar = () => {
     const { isAuthenticated, setIsAuthenticated, isAuthCheckingCompleted } = useAuth();
-
+    const router = useRouter()
     const logout = async() => {
         
         try{
@@ -22,6 +23,7 @@ const Navbar = () => {
                 console.log(response)
                 console.log('Wylogowano pomyslnie', response.data);
                 setIsAuthenticated(false)
+                router.push('/')
                
               } else {
                 //error
