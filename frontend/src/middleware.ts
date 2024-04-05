@@ -5,8 +5,12 @@ export function middleware(request: NextRequest) {
   if (!currentUser && !request.nextUrl.pathname.startsWith('/session')) {
     return Response.redirect(new URL('/session', request.url))
   }
+
+  if (currentUser && request.nextUrl.pathname.startsWith('/session')) {
+    return Response.redirect(new URL('/', request.url))
+  }
 }
  
 export const config = {
-  matcher: ['/drivers/:path*', '/clients/:path*', '/orders/:path*', '/reports/:patch*'],
+  matcher: ['/drivers/:path*', '/clients/:path*', '/orders/:path*', '/reports/:path*', '/session/:path*'],
 }

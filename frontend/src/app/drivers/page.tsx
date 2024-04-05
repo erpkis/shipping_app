@@ -10,6 +10,7 @@ import FormComponent from "@/components/Form";
 import { useEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import fetchData from "../utils/functions/fetchData";
+import axios from "axios";
 
 export default function Drivers() {
     const [drivers, setDrivers] = useState<any>()
@@ -28,15 +29,15 @@ export default function Drivers() {
     const onSubmit: SubmitHandler<Driver> = async(data: any) => {
       console.log(data)
       try{
-      const response = await fetch('http://localhost:3000/drivers', {
+      const response = await axios.post('http://localhost:3000/drivers', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem("auth_key"),
         },
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) {
+      if (!response) {
         throw new Error('Network response was not ok');
       }
 

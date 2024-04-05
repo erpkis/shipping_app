@@ -5,12 +5,14 @@ import { useAuth } from "@/contexts/authContext";
 import axios from "axios";
 import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
+import { useRouter } from 'next/navigation'
 type LoginField = {
   login: string,
   password: string,
 }
 export default function Session() {
   const [error, setError] = useState(null);
+  const router = useRouter()
   const loginFields = [
     {name: 'user[email]', label: 'Email', type: 'text'},
     {name: 'user[password]', label: 'Hasło', type: 'password'}
@@ -29,7 +31,7 @@ export default function Session() {
         localStorage.setItem("auth_key", response.headers["authorization"])
         console.log('Logowanie pomyślne', response.data);
         authContext!.setIsAuthenticated(true)
-       
+        router.push('/')
       } else {
         //error
         console.log(response)
