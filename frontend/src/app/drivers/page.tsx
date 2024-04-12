@@ -11,15 +11,10 @@ import { useEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import fetchData from "../utils/functions/fetchData";
 import axios from "axios";
-
+import { driverFields } from "../utils/fields";
 export default function Drivers() {
     const [drivers, setDrivers] = useState<any>()
-    const driverFields = [
-      { name: 'name', label: 'Imię', type: 'text' },
-      { name: 'surname', label: 'Nazwisko', type: 'text' },
-      { name: 'phone_number', label: 'Numer telefonu', type: 'text' },
-      { name: 'address', label: 'Adres', type: 'Adres' },
-    ];
+    
     useEffect(() => {
       
       fetchData("http://localhost:3000/drivers", setDrivers)
@@ -27,7 +22,6 @@ export default function Drivers() {
 
 
     const onSubmit: SubmitHandler<Driver> = async(data: any) => {
-      console.log(data)
       try{
       const response = await axios.post('http://localhost:3000/drivers', {
         method: 'POST',

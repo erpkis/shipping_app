@@ -37,7 +37,7 @@ class Users::SessionsController < Devise::SessionsController
                 secure: Rails.env.production?,
                 samesite: :none,
                 domain: :all,
-                expires: 1.minute.from_now,
+                expires: 60.minute.from_now,
             }
         end
     end
