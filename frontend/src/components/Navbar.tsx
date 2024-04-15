@@ -34,8 +34,9 @@ const Navbar = () => {
             }
         
         
-        
+       
     }
+    console.log(isAuthenticated)
     return (
         <nav className={styles.main_nav}>
             <div className={styles.logo_container}>
