@@ -17,12 +17,7 @@ import { SubmitHandler } from "react-hook-form";
 import FormComponent from "@/components/Form";
 export default function Orders() {
     const [orders, setOrders] = useState<any>()
-    const driverFields = [
-      { name: 'name', label: 'Imię', type: 'text' },
-      { name: 'surname', label: 'Nazwisko', type: 'text' },
-      { name: 'phone_number', label: 'Numer telefonu', type: 'text' },
-      { name: 'address', label: 'Adres', type: 'Adres' },
-    ];
+    
 
     const onSubmit: SubmitHandler<Order> = async(data: any) => {
       try{

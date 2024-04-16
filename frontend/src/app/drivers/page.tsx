@@ -23,12 +23,10 @@ export default function Drivers() {
 
     const onSubmit: SubmitHandler<Driver> = async(data: any) => {
       try{
-      const response = await axios.post('http://localhost:3000/drivers', {
-        method: 'POST',
+      const response = await axios.post('http://localhost:3000/drivers', {driver: data},{
         headers: {
           Authorization: localStorage.getItem("auth_key"),
         },
-        body: JSON.stringify(data),
       });
 
       if (!response) {

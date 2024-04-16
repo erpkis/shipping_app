@@ -1,4 +1,4 @@
-"use client"
+
 
 import Link from 'next/link'
 import styles from '../app/ui/navbar.module.css'
@@ -6,9 +6,14 @@ import Image from 'next/image'
 import { useAuth } from '@/contexts/authContext'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-const Navbar = () => {
-    const { isAuthenticated, setIsAuthenticated, isAuthCheckingCompleted } = useAuth();
-    const router = useRouter()
+import { getSession } from '@/lib'
+import LogoutButton from './LogoutButton'
+
+const Navbar =async () => {
+    
+    const sessionData = await getSession();
+    //const router = useRouter()
+    console.log(sessionData)
     const logout = async() => {
         
         try{
@@ -22,8 +27,8 @@ const Navbar = () => {
                 localStorage.removeItem("auth_key")
                 console.log(response)
                 console.log('Wylogowano pomyslnie', response.data);
-                setIsAuthenticated(false)
-                router.push('/')
+                //setIsAuthenticated(false)
+                //router.push('/')
                
               } else {
                 //error
@@ -36,27 +41,25 @@ const Navbar = () => {
         
        
     }
-    console.log(isAuthenticated)
+    
     return (
         <nav className={styles.main_nav}>
             <div className={styles.logo_container}>
                 <Link href={"/"}><Image src={'/images/logo.png'} alt={'test'} fill/></Link>
             </div>
             <ul>
-            {isAuthCheckingCompleted ? (
-                    isAuthenticated ? 
+            {sessionData ? 
+                     
                         <>
                             <li><Link href={"/drivers"}>Kierowcy</Link></li>
                             <li><Link href={"/orders"}>Zlecenia</Link></li>
                             <li><Link href={"/clients"}>Klienci</Link></li>
-                            <li onClick={logout}>Wyloguj</li> 
+                            <LogoutButton />
                         </>
                         : 
+                        
                         <li><Link href={'/session'}>Logowanie</Link></li>
-                    ) : (
-                    // Możesz tu dodać jakiś wskaźnik ładowania lub nic nie wyświetlać
-                    <div>Ładowanie...</div>
-                )}
+                }
             </ul>
         </nav>
     )

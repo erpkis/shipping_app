@@ -1,6 +1,8 @@
 "use client"
 
+
 import { createContext, useContext, useState, ReactNode, Dispatch, useEffect, SetStateAction } from 'react';
+import { getSession } from '../lib';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -26,10 +28,13 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isAuthCheckingCompleted, setIsAuthCheckingCompleted] = useState<boolean>(false);
-
+  
   useEffect(() => {
-    const authKey = localStorage.getItem("auth_key");
-    setIsAuthenticated(!!authKey);
+    const loadSession = async () => {
+      const sessionData = await getSession();
+      setIsAuthenticated(sessionData ? true : false);
+    };
+    loadSession()
     setIsAuthCheckingCompleted(true);
   }, [])
   return (
