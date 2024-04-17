@@ -3,9 +3,7 @@
 import Link from 'next/link'
 import styles from '../app/ui/navbar.module.css'
 import Image from 'next/image'
-import { useAuth } from '@/contexts/authContext'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
 import { getSession } from '@/lib'
 import LogoutButton from './LogoutButton'
 
@@ -14,33 +12,7 @@ const Navbar =async () => {
     const sessionData = await getSession();
     //const router = useRouter()
     console.log(sessionData)
-    const logout = async() => {
-        
-        try{
-            axios.defaults.withCredentials = true;
-            const response = await axios.delete('http://localhost:3000/logout', {
-                headers: {
-                    Authorization: localStorage.getItem("auth_key")
-                }
-            });
-            if (response.status === 200) {
-                localStorage.removeItem("auth_key")
-                console.log(response)
-                console.log('Wylogowano pomyslnie', response.data);
-                //setIsAuthenticated(false)
-                //router.push('/')
-               
-              } else {
-                //error
-                console.log(response + "BŁAD")
-              }
-            } catch (error) {
-              console.error('Błąd podczas logowania:', error);
-            }
-        
-        
-       
-    }
+    
     
     return (
         <nav className={styles.main_nav}>
