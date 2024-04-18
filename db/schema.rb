@@ -14,6 +14,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_143849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "bus_transports", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.integer "passenger_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_bus_transports_on_order_id"
+  end
+
+  create_table "cargo_transports", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.string "item_description"
+    t.decimal "weight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_cargo_transports_on_order_id"
+  end
+
   create_table "cars", force: :cascade do |t|
     t.string "name"
     t.string "model"
@@ -47,18 +64,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_143849) do
 
   create_table "orders", force: :cascade do |t|
     t.date "delivery_date"
-    t.date "delivery_location"
+    t.string "delivery_location"
     t.integer "status"
     t.string "description"
-    t.string "weight"
+    t.string "order_type"
+    t.integer "orderable_id"
     t.bigint "client_id", null: false
-    t.bigint "car_id", null: false
-    t.bigint "driver_id", null: false
+    t.bigint "car_id"
+    t.bigint "driver_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["car_id"], name: "index_orders_on_car_id"
     t.index ["client_id"], name: "index_orders_on_client_id"
     t.index ["driver_id"], name: "index_orders_on_driver_id"
+    t.index ["order_type", "orderable_id"], name: "index_orders_on_order_type_and_orderable_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -75,6 +94,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_15_143849) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bus_transports", "orders"
+  add_foreign_key "cargo_transports", "orders"
   add_foreign_key "orders", "cars"
   add_foreign_key "orders", "clients"
   add_foreign_key "orders", "drivers"
