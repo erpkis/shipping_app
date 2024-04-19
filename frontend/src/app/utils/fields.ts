@@ -1,6 +1,7 @@
 export const orderFields = [
     { name: 'delivery_location', label:'Miejsce dostarczenia', type: 'text' },
-    { name: 'weight', label: 'Waga (kg)', type: 'number' },
+    { name: 'order_type', label: 'Typ zlecenia', type: 'text' },
+    { name: 'orderable_id', label: 'Zlecenie', type: 'text' },
     { name: 'client_id', label: 'Klient', type: 'text' },
     { name: 'car_id', label: 'Pojazd', type: 'text' },
     { name: 'driver_id', label: 'Kierowca', type: 'text' },

@@ -3,15 +3,14 @@
 import Link from 'next/link'
 import styles from '../app/ui/navbar.module.css'
 import Image from 'next/image'
-import axios from 'axios'
 import { getSession } from '@/lib'
 import LogoutButton from './LogoutButton'
 
 const Navbar =async () => {
     
     const sessionData = await getSession();
-    //const router = useRouter()
     console.log(sessionData)
+    console.log("TEST 3")
     
     
     return (
