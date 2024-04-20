@@ -21,5 +21,6 @@ Projekt jest moim wejściem poważniejszym w rails i react, dotychczas dużo cza
 
 
 
+
 ## To do (przyszłościowo):
 - [ ] przerobić sesję z tokenów na ciasteczka;
