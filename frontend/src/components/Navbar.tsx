@@ -1,16 +1,17 @@
 
 
+"use client"
+
 import Link from 'next/link'
 import styles from '../app/ui/navbar.module.css'
 import Image from 'next/image'
-import { getSession } from '@/lib'
 import LogoutButton from './LogoutButton'
+import { useAuth } from '@/contexts/authContext'
 
-const Navbar =async () => {
-    
-    const sessionData = await getSession();
-    console.log(sessionData)
-    console.log("TEST 3")
+const Navbar =() => {
+    const {isAuthenticated} = useAuth()
+    console.log(isAuthenticated)
+    console.log("TEST2222")
     
     
     return (
@@ -19,7 +20,7 @@ const Navbar =async () => {
                 <Link href={"/"}><Image src={'/images/logo.png'} alt={'test'} fill/></Link>
             </div>
             <ul>
-            {sessionData ? 
+            {isAuthenticated ? 
                      
                         <>
                             <li><Link href={"/drivers"}>Kierowcy</Link></li>

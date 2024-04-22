@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 
 export async function logout() {
   // Destroy the session
+  console.log("WYWALAM SESJE")
   cookies().set("jwt", "", { expires: new Date(0) });
 }
 

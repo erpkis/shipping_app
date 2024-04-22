@@ -1,21 +1,21 @@
-"use client"
+// "use client"
 
-import { AuthProvider } from "@/contexts/authContext";
+// import { AuthProvider } from "@/contexts/authContext";
 
-import React from "react";
-
-
+// import React from "react";
 
 
 
-const Layout: React.FC<any> = ({ children}) => {
+
+
+// const Layout: React.FC<any> = ({ children}) => {
   
-      return (
-        <AuthProvider>
-            {children}
-        </AuthProvider>
+//       return (
+       
+//             {children}
+      
     
-      );
-}
+//       );
+// }
 
-export default Layout
+// export default Layout
