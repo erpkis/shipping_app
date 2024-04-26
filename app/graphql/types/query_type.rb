@@ -18,14 +18,21 @@ module Types
       ids.map { |id| context.schema.object_from_id(id, context) }
     end
 
-    # Add root-level fields here.
-    # They will be entry points for queries on your schema.
+    field :drivers, [Types::DriverType], null: false
 
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
+    def drivers
+      Driver.all
     end
+
+    field :driver, Types::UserType, null: true do
+      argument :id, ID, required: true
+    end
+
+    def driver(id:)
+      Driver.find(id)
+    end
+
+
+
   end
 end

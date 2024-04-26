@@ -12,13 +12,22 @@ import { SubmitHandler } from "react-hook-form";
 import fetchData from "../utils/functions/fetchData";
 import axios from "axios";
 import { driverFields } from "../utils/fields";
+import { gql, useQuery } from "@apollo/client";
+
+const GET_DRIVERS = gql`
+  query GetDrivers{
+    drivers{
+      id
+      name
+    }
+  }`
 export default function Drivers() {
     const [drivers, setDrivers] = useState<any>()
+
+    const {loading, error, data} = useQuery(GET_DRIVERS);
     
-    useEffect(() => {
-      
-      fetchData("http://localhost:3000/drivers", setDrivers)
-    }, [])
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :</p>;
 
 
     const onSubmit: SubmitHandler<Driver> = async(data: any) => {
@@ -40,10 +49,10 @@ export default function Drivers() {
     return (
       <main>
         <div>
-        {drivers ?  
-      drivers.map((driver : any) => (
+        { 
+      data.drivers.map((driver : any) => (
         <p key={driver.id}>{driver.name}</p>
-      )) : "Brak danych"}
+      ))}
         
          
         </div>

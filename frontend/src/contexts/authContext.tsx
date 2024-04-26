@@ -2,7 +2,7 @@
 
 
 import { createContext, useContext, useState, ReactNode, Dispatch, useEffect, SetStateAction } from 'react';
-import { getSession } from '../lib';
+import { getSession } from '../lib/lib';
 
 interface AuthContextType {
   isAuthenticated: boolean;

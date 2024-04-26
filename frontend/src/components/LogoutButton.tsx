@@ -1,6 +1,6 @@
 "use client"
 import { useAuth } from "@/contexts/authContext";
-import { logout } from "@/lib"
+import { logout } from "@/lib/lib"
 import axios from "axios";
 
 const LogoutButton = () => {
