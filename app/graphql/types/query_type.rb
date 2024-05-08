@@ -24,7 +24,7 @@ module Types
       Driver.all
     end
 
-    field :driver, Types::UserType, null: true do
+    field :driver, Types::DriverType, null: true do
       argument :id, ID, required: true
     end
 
